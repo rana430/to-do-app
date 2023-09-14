@@ -67,7 +67,7 @@ export default function TaskPage() {
 
   };
 
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Header theme={theme}/>
@@ -96,7 +96,7 @@ export default function TaskPage() {
           setOpenPopup={setOpenPopup}
           title={"Add Task"}
           theme={theme}>
-          <TaskForm theme={theme} styles={styles}/>
+          <TaskForm theme={theme} />
         </PopUp>
         
         <Box

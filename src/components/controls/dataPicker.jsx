@@ -6,19 +6,23 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { addTask } from "../../utils/api";
 
-export default function DataPicker() {
+export default function DataPicker({setDueDate,dueDate}) {
   const theme = createTheme();
   const datePickerStyles = {
-    width: "225px"
+    width: "225px",
   };
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Box component={"div"} style={datePickerStyles}>
         <LocalizationProvider
           dateAdapter={AdapterDayjs}
           style={theme.spacing(1)}>
-          <DatePicker label="Due Date" disablePast={true}  />
+          <DatePicker
+            label="Due Date"
+            disablePast={true}
+            onChange={(newValue) => setDueDate(newValue)}
+          />
         </LocalizationProvider>
       </Box>
     </ThemeProvider>

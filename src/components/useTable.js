@@ -1,14 +1,10 @@
 import * as React from "react";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ControlledCheckbox from "./controls/checkBox";
-import { useDispatch } from "react-redux";
-import { randomCreatedDate } from "@mui/x-data-grid-generator";
-import { Box, ThemeProvider, createTheme } from "@mui/material";
+
+import { Box, ThemeProvider } from "@mui/material";
 import Task from "./task";
 import PopUp from "./popUp";
 import TaskForm from "../Tasks/taskForm";
-import { getAllTasks } from "../utils/api";
+import { getAllTasks ,deleteTask} from "../utils/api";
 
 /* const rows = [
   {
@@ -40,8 +36,7 @@ import { getAllTasks } from "../utils/api";
   },
 ]; */
 
-
-export default function UseTable({theme,matches}) {
+export default function UseTable({ theme, matches }) {
   const styles = {
     taskBody: {
       border: "1px solid transparent",
@@ -52,22 +47,28 @@ export default function UseTable({theme,matches}) {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      flexDirection:"column"
+      flexDirection: "column",
     },
   };
   const [tasks, setTasks] = React.useState([]);
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [edit, setEdit] = React.useState(false);
+  const [taskId, setTaskId] = React.useState([]);
   React.useEffect(() => {
-    getAllTasks(setTasks);
+    getAllTasks(setTask);
   }, []);
-
+  const setTask=(data)=>{
+    setTasks(data);
+  }
   const onDeleteClick = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
+    deleteTask({taskId,setTasks});
   };
 
-  const onEditClick = () => {
+  const onEditClick = (taskId) => {
+    setEdit(true);
     setOpenPopup(true);
+    setTaskId(taskId);
+    console.log(taskId);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -84,14 +85,15 @@ export default function UseTable({theme,matches}) {
           const formattedDueDate = `${day}/${month}/${year}`;
           return (
             <Task
-              key={row.id}
+              key={row._id}
+              id={row.id}
               title={row.title}
               description={row.description}
               isLate={row.isLate}
               dueDate={formattedDueDate}
               status={row.status}
-              onDeleteClick={() => onDeleteClick(row.id)}
-              onEditClick={() => onEditClick(row.id)}
+              onDeleteClick={() => onDeleteClick(row._id)}
+              onEditClick={() => onEditClick(row._id)}
               theme={theme}
               matches={matches}
             />
@@ -101,7 +103,13 @@ export default function UseTable({theme,matches}) {
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
           title={"Edit Task"}>
-          <TaskForm />
+          <TaskForm
+            theme={theme}
+            edit={edit}
+            setEdit={setEdit}
+            taskId={taskId}
+            setTasks={setTask}
+          />
         </PopUp>
       </Box>
     </ThemeProvider>
