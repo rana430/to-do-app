@@ -1,13 +1,14 @@
-import Task from '../Tasks/task';
+import TaskPage from '../Tasks/taskPage';
 import Header from '../components/header'
 
 import './App.css';
 
 function App() {
+  
   return (
     <>
-    <Header/>
-    <Task/>
+    
+    <TaskPage/>
     </>
   );
 }

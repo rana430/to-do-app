@@ -1,32 +1,21 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Box } from "@mui/material";
 
-
-// Create a custom theme with color palettes
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#e6121d",
-      dark: "#e9a4a4",
-      light: "#e6121d",
-    }
-  },
-  
-});
-
-export default function ButtonControl({ text, size, onClick, variant }) {
+export default function ButtonControl({ text, size, onClick, variant,theme }) {
   return (
     <ThemeProvider theme={theme}>
-      <Button
-        variant={variant || "contained"}
-        size={size || "large"}
-        color= "primary"
-        onClick={onClick}
-        style={{margin:theme.spacing(1)}}
-      >
-        {text}
-      </Button>
-    </ThemeProvider >
+      <Box component={"div"} >
+        <Button
+          variant={variant || "contained"}
+          size={size || "large"}
+          color="primary"
+          onClick={onClick}
+          style={{ margin: `${theme.spacing(2)}` }}>
+          {text}
+        </Button>
+      </Box>
+    </ThemeProvider>
   );
 }

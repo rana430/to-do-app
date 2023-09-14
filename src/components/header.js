@@ -4,11 +4,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-export default function Header() {
+export default function Header({theme}) {
   const styles = {
     headerBox: {
-      backgroundColor: "#fff",
-      color: "#e40808",
+      backgroundColor: theme.palette.primary.main,
+      color: "#FFF",
+    
     },
     textCenter: {
       display: "flex",
