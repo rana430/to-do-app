@@ -52,6 +52,7 @@ export default function Task({
   const [statues,setStatus]=useState(status);
   const handleOnClick = (e) => {
     const newStatus = e.target.checked ? "done" : "pending";
+    setChecked(e.target.checked)
     setStatus(newStatus); // Update the status in the component state
     updateStatus(setTask, newStatus, id); // Call the updateStatus function with the new status
     console.log(status,"front");

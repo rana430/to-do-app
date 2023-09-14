@@ -8,8 +8,7 @@ import {
   createTheme,
   Box,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import SearchBar from "../components/searchBar";
+
 import Header from "../components/header";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -38,6 +37,7 @@ export default function TaskPage() {
   const mini = useMediaQuery('(max-width:700px)');
   const [openPopup, setOpenPopup] = useState(false);
   const [tasks, setTasks] = React.useState([]);
+  
   const styles = {
     dialogStyle: {
       display: "flex",
@@ -56,16 +56,10 @@ export default function TaskPage() {
       width:"80%",
       margin: `${theme.spacing(1)} auto`,
     },
-    appBarStyle:{
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      width: mini?"60%": "50%",
-      margin: `${theme.spacing(1)} auto`,
-    }
+
 
   };
+  
 
 
   return (
@@ -79,18 +73,7 @@ export default function TaskPage() {
           height: "100vh",
           margin: `${theme.spacing(2)} auto`,
         }}>
-        <Box component={"div"} style={styles.appBarStyle}>
-          <SearchBar />
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            color="primary"
-            onClick={() => {
-              setOpenPopup(true);
-            }}>
-            Add
-          </Button>
-        </Box>
+        
         <PopUp
           openPopup={openPopup}
           setOpenPopup={setOpenPopup}
