@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBar from "../components/searchBar";
-import TaskHeader from "../components/taskHeader";
 import Header from "../components/header";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -35,9 +34,10 @@ const theme = createTheme({
 
 
 export default function TaskPage() {
+
   const mini = useMediaQuery('(max-width:700px)');
   const [openPopup, setOpenPopup] = useState(false);
-  const [task,setTask]=useState([]);
+  const [tasks, setTasks] = React.useState([]);
   const styles = {
     dialogStyle: {
       display: "flex",
@@ -96,13 +96,13 @@ export default function TaskPage() {
           setOpenPopup={setOpenPopup}
           title={"Add Task"}
           theme={theme}>
-          <TaskForm theme={theme} />
+          <TaskForm theme={theme} setTask={setTasks}/>
         </PopUp>
         
         <Box
           component={"div"}
           style={{ width: "80%", margin: `${theme.spacing(2)} auto` }}>
-          <UseTable theme={theme} matches={mini}/>
+          <UseTable theme={theme} matches={mini} tasks={tasks} setTasks={setTasks}/>
         </Box>
       </Box>
     </ThemeProvider>

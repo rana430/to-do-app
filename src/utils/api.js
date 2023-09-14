@@ -63,15 +63,31 @@ const updateTask = (
     })
     .then((response) => {
       console.log(response.data);
-      setTitle(""); // Clear the input field
-      setDescription(""); // Clear the input field
-      setDueDate(new Date()); // Clear the input field
-      getAllTasks(setTasks); // Reload the tasks
-      setEdit(false); // Exit edit mode
+      setTitle("");
+      setDescription("");
+      setDueDate(new Date());
+      getAllTasks(setTasks);
+      setEdit(false);
     })
     .catch((error) => {
       console.error("Error updating task:", error);
-      // Handle the error here, e.g., display an error message to the user
+    });
+
+  console.log("try to update");
+};
+const updateStatus = (setTask, status, taskId) => {
+  console.log(status);
+  axios
+    .put(`http://localhost:5000/update/status/${taskId}`, {
+      _id: taskId,
+      status,
+    })
+    .then((response) => {
+      console.log(response.data);
+      getAllTasks(setTask);
+    })
+    .catch((error) => {
+      console.error("Error updating task:", error);
     });
 
   console.log("try to update");
@@ -88,4 +104,4 @@ const deleteTask = ({ taskId, setTasks }) => {
     .catch((e) => console.log("try to delete", e));
 };
 
-export { getAllTasks, addTask, updateTask, deleteTask };
+export { getAllTasks, addTask, updateTask, deleteTask, updateStatus };

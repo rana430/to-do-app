@@ -8,8 +8,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { addTask, updateTask } from "../utils/api";
 
 
-export default function TaskForm({ theme, edit, setEdit, taskId,setTasks }) {
-  
+export default function TaskForm({ theme, edit, setEdit, taskId ,setTask}) {
+  /* const [tasks,setTasks]=useState(); */
   const [title, setTitle] = useState("");
   const [describtion, setDescribtion] = useState("");
   const [dueDate, setDueDate] = React.useState(new Date());
@@ -47,7 +47,7 @@ export default function TaskForm({ theme, edit, setEdit, taskId,setTasks }) {
             !edit
               ? () =>
                   addTask(
-                    setTasks,
+                    setTask,
                     setTitle,
                     title,
                     describtion,
@@ -57,7 +57,7 @@ export default function TaskForm({ theme, edit, setEdit, taskId,setTasks }) {
                   )
               : updateTask(
                   taskId,
-                  setTasks,
+                  setTask,
                   setTitle,
                   title,
                   describtion,

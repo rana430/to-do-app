@@ -6,37 +6,7 @@ import PopUp from "./popUp";
 import TaskForm from "../Tasks/taskForm";
 import { getAllTasks ,deleteTask} from "../utils/api";
 
-/* const rows = [
-  {
-    id: 1,
-    title: "cook",
-    description: "cooking with mom",
-    dueDate: randomCreatedDate(),
-    creationDate: randomCreatedDate(),
-    status: "pending",
-    isLate: false,
-  },
-  {
-    id: 2,
-    title: "cook",
-    description: "cooking with mom",
-    dueDate: randomCreatedDate(),
-    creationDate: randomCreatedDate(),
-    status: "done",
-    isLate: false,
-  },
-  {
-    id: 3,
-    title: "cook",
-    description: "cooking with mom",
-    dueDate: randomCreatedDate(),
-    creationDate: randomCreatedDate(),
-    status: "pending",
-    isLate: true,
-  },
-]; */
-
-export default function UseTable({ theme, matches }) {
+export default function UseTable({ theme, matches ,tasks,setTasks}) {
   const styles = {
     taskBody: {
       border: "1px solid transparent",
@@ -50,16 +20,14 @@ export default function UseTable({ theme, matches }) {
       flexDirection: "column",
     },
   };
-  const [tasks, setTasks] = React.useState([]);
+  
   const [openPopup, setOpenPopup] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
   const [taskId, setTaskId] = React.useState([]);
   React.useEffect(() => {
-    getAllTasks(setTask);
+    getAllTasks(setTasks);
   }, []);
-  const setTask=(data)=>{
-    setTasks(data);
-  }
+ 
   const onDeleteClick = (taskId) => {
     deleteTask({taskId,setTasks});
   };
@@ -86,7 +54,7 @@ export default function UseTable({ theme, matches }) {
           return (
             <Task
               key={row._id}
-              id={row.id}
+              id={row._id}
               title={row.title}
               description={row.description}
               isLate={row.isLate}
@@ -108,7 +76,7 @@ export default function UseTable({ theme, matches }) {
             edit={edit}
             setEdit={setEdit}
             taskId={taskId}
-            setTasks={setTask}
+            setTask={setTasks}
           />
         </PopUp>
       </Box>
