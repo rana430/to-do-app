@@ -2,7 +2,6 @@ import axios from "axios";
 
 const getAllTasks = (setTasks) => {
   axios.get("http://localhost:5000").then(({ data }) => {
-    console.log("data:", data);
     setTasks(data);
   });
 };
@@ -42,31 +41,16 @@ const addTask = (
     });
 };
 
-const updateTask = (
-  taskId,
-  setTasks,
-  setTitle,
-  title,
-  description,
-  setDescription,
-  dueDate,
-  setDueDate,
-  setEdit
-) => {
-  console.log(taskId);
+const updateTask = (taskId, setTask, title, description, dueDate, setEdit) => {
   axios
     .put(`http://localhost:5000/update/${taskId}`, {
-      _id: taskId,
       title,
       description,
-      dueDate,
+      dueDate
     })
     .then((response) => {
       console.log(response.data);
-      setTitle("");
-      setDescription("");
-      setDueDate(new Date());
-      getAllTasks(setTasks);
+      getAllTasks(setTask);
       setEdit(false);
     })
     .catch((error) => {
@@ -78,8 +62,7 @@ const updateTask = (
 const updateStatus = (setTask, status, taskId) => {
   console.log(status);
   axios
-    .put(`http://localhost:5000/update/status/${taskId}`, {
-      _id: taskId,
+    .patch(`http://localhost:5000/update/status/${taskId}`, {
       status,
     })
     .then((response) => {

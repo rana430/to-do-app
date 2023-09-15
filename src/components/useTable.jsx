@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, ThemeProvider, Typography } from "@mui/material";
+import { Box, Button, ThemeProvider } from "@mui/material";
 import Task from "./task";
 import PopUp from "./popUp";
 import TaskForm from "../Tasks/taskForm";
@@ -9,8 +9,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 
-
 export default function UseTable({ theme, matches, tasks, setTasks }) {
+  //page Styles
   const styles = {
     taskBody: {
       border: "1px solid transparent",
@@ -42,31 +42,39 @@ export default function UseTable({ theme, matches, tasks, setTasks }) {
     },
   };
 
+  //useState and useEfeect
   const [openPopup, setOpenPopup] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
-  const [taskId, setTaskId] = React.useState([]);
+  const [taskId, setTaskId] = React.useState();
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [title, setTitle] = React.useState();
+  const [description, setDescription] = React.useState();
+  const [dueDate, setDueDate] = React.useState();
+  const [status, setStatus] = React.useState();
+  const [late, setLate] = React.useState(false);
+  const [createDate, setCreatedDate] = React.useState();
+  
   React.useEffect(() => {
     getAllTasks(setTasks);
   }, []);
 
+  //handler functions
   const onDeleteClick = (taskId) => {
     deleteTask({ taskId, setTasks });
   };
-
   const onEditClick = (taskId) => {
     setEdit(true);
     setOpenPopup(true);
     setTaskId(taskId);
     console.log(taskId);
   };
-
   const filteredTasks = tasks.filter(
     (task) =>
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase())||(task.title!=='')||(task.description!=='')
+      task.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  //search styles
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -133,15 +141,7 @@ export default function UseTable({ theme, matches, tasks, setTasks }) {
         </Box>
 
         {filteredTasks.map((row) => {
-          const dueDate = new Date(row.dueDate);
-
-          // Get day, month, and year components
-          const day = dueDate.getDate();
-          const month = dueDate.getMonth() + 1; // Month is zero-based, so add 1
-          const year = dueDate.getFullYear();
-
-          // Format the date as "dd/mm/yyyy"
-          const formattedDueDate = `${day}/${month}/${year}`;
+          
           return (
             <Task
               key={row._id}
@@ -149,12 +149,15 @@ export default function UseTable({ theme, matches, tasks, setTasks }) {
               title={row.title}
               description={row.description}
               isLate={row.isLate}
-              dueDate={formattedDueDate}
+              dueDate={row.dueDate}
+              creationDate={row.creationDate}
               status={row.status}
               onDeleteClick={() => onDeleteClick(row._id)}
               onEditClick={() => onEditClick(row._id)}
               theme={theme}
               matches={matches}
+              setTask={setTasks}
+              setStatus={setStatus}
             />
           );
         })}
@@ -168,6 +171,15 @@ export default function UseTable({ theme, matches, tasks, setTasks }) {
             setEdit={setEdit}
             taskId={taskId}
             setTask={setTasks}
+            setDescription={setDescription}
+            setTitle={setTitle}
+            setDueDate={setDueDate}
+            title={title}
+            status={status}
+            description={description}
+            late={late}
+            createDate={createDate}
+            dueDate={dueDate}
           />
         </PopUp>
       </Box>

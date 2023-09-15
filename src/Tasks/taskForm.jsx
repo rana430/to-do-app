@@ -7,13 +7,22 @@ import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { addTask, updateTask } from "../utils/api";
 
-
-export default function TaskForm({ theme, edit, setEdit, taskId ,setTask}) {
+export default function TaskForm({
+  theme,
+  edit,
+  setEdit,
+  taskId,
+  setTask,
+  setDueDate,
+  setTitle,
+  setDescription,
+  dueDate,
+  title,
+  description,
+  status,
+}) {
   /* const [tasks,setTasks]=useState(); */
-  const [title, setTitle] = useState("");
-  const [describtion, setDescribtion] = useState("");
-  const [dueDate, setDueDate] = React.useState(new Date());
-  
+
   const styles = {
     dialogStyle: {
       display: "flex",
@@ -38,7 +47,12 @@ export default function TaskForm({ theme, edit, setEdit, taskId ,setTask}) {
           value={title}
           type={"text"}
         />
-        <Input name={"Describtion"} type={"text"}  onChange={(e)=>setDescribtion(e.target.value)} value={describtion} />
+        <Input
+          name={"Describtion"}
+          type={"text"}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+        />
         <DataPicker name="date" setDueDate={setDueDate} dueDate={dueDate} />
         <ButtonControl
           text={"Submit"}
@@ -50,20 +64,17 @@ export default function TaskForm({ theme, edit, setEdit, taskId ,setTask}) {
                     setTask,
                     setTitle,
                     title,
-                    describtion,
-                    setDescribtion,
+                    description,
+                    setDescription,
                     dueDate,
                     setDueDate
                   )
               : updateTask(
                   taskId,
                   setTask,
-                  setTitle,
                   title,
-                  describtion,
-                  setDescribtion,
+                  description,
                   dueDate,
-                  setDueDate,
                   setEdit
                 )
           }
