@@ -3,7 +3,7 @@ import ButtonControl from "../components/controls/buttonControl";
 import DataPicker from "../components/controls/dataPicker";
 import Input from "../components/controls/input";
 import Box from "@mui/material/Box";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { addTask, updateTask } from "../utils/api";
 
 export default function TaskForm({
@@ -18,10 +18,8 @@ export default function TaskForm({
   dueDate,
   title,
   description,
-  status,
 }) {
-  /* const [tasks,setTasks]=useState(); */
-
+  //page styles
   const styles = {
     dialogStyle: {
       display: "flex",
@@ -57,7 +55,7 @@ export default function TaskForm({
           text={"Submit"}
           type="submit"
           onClick={
-            !edit
+            (!edit && taskId===undefined)
               ? () =>
                   addTask(
                     setTask,
@@ -68,14 +66,7 @@ export default function TaskForm({
                     dueDate,
                     setDueDate
                   )
-              : updateTask(
-                  taskId,
-                  setTask,
-                  title,
-                  description,
-                  dueDate,
-                  setEdit
-                )
+              : updateTask(taskId, setTask, title, description, dueDate,setEdit)
           }
           theme={theme}
         />

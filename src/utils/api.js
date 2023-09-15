@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getAllTasks = (setTasks) => {
-  axios.get("http://localhost:5000").then(({ data }) => {
+  axios.get("http://localhost:5000/").then(({ data }) => {
     setTasks(data);
   });
 };
@@ -14,8 +14,9 @@ const addTask = (
   dueDate,
   setDueDate
 ) => {
+  const isLate=false;
   axios
-    .post("http://localhost:5000/save", { title, description, dueDate })
+    .post("http://localhost:5000/save", { title, description, dueDate ,isLate})
     .then((response) => {
       console.log(response.data);
       setTitle("");
@@ -42,38 +43,35 @@ const addTask = (
 };
 
 const updateTask = (taskId, setTask, title, description, dueDate, setEdit) => {
+  
   axios
     .put(`http://localhost:5000/update/${taskId}`, {
       title,
       description,
-      dueDate
+      dueDate,
     })
     .then((response) => {
-      console.log(response.data);
       getAllTasks(setTask);
-      setEdit(false);
     })
     .catch((error) => {
       console.error("Error updating task:", error);
     });
-
-  console.log("try to update");
+  setEdit(false);
 };
 const updateStatus = (setTask, status, taskId) => {
-  console.log(status);
   axios
     .patch(`http://localhost:5000/update/status/${taskId}`, {
       status,
     })
     .then((response) => {
-      console.log(response.data);
+      
       getAllTasks(setTask);
     })
     .catch((error) => {
       console.error("Error updating task:", error);
     });
 
-  console.log("try to update");
+  
 };
 
 const deleteTask = ({ taskId, setTasks }) => {

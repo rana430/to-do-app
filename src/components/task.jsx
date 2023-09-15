@@ -1,5 +1,5 @@
 // Task.js
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, ThemeProvider } from "@mui/material";
 import ControlledCheckbox from "./controls/checkBox";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -20,12 +20,25 @@ export default function Task({
   setTask,
   setStatus,
 }) {
+
+  // handler functions
   const handleDeleteClick = () => {
     onDeleteClick();
   };
   const handleEditClick = () => {
     onEditClick();
   };
+  const handleOnClick = (e) => {
+    setChecked(e.target.checked);
+    if (e.target.checked) {
+      status = "done";
+    } else {
+      status = "pending";
+    }
+    updateStatus(setTask, status, id);
+  };
+
+  //page styles
   const styles = {
     taskBody: {
       backgroundColor: isLate
@@ -49,16 +62,11 @@ export default function Task({
       fontSize: "18px",
     },
   };
+  
+
+  //useState
   const [checked, setChecked] = React.useState(status === "done");
-  const handleOnClick = (e) => {
-    setChecked(e.target.checked);
-    if (e.target.checked) {
-      status = "done";
-    } else {
-      status = "pending";
-    }
-    updateStatus(setTask, status, id);
-  };
+  
   const newdueDate = new Date(dueDate);
           const day = newdueDate.getDate();
           const month = newdueDate.getMonth() + 1;
