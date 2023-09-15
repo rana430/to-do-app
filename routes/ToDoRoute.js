@@ -12,7 +12,7 @@ const router = Router();
 router.get("/", getToDos);
 router.post("/save", saveToDo);
 router.put("/update/:id", updateToDo);
-router.put("/update/status:id",updateStatus);
+router.patch("/update/status/:id",updateStatus);
 router.delete("/delete/:id", deleteToDo);
 
 module.exports = router;

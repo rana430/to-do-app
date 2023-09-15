@@ -26,9 +26,7 @@ const updateIsLateStatus = async () => {
   }
 };
 
-
 cron.schedule("0 0 * * *", () => {
-  
   updateIsLateStatus();
 });
 
@@ -46,38 +44,35 @@ module.exports.saveToDo = async (req, res) => {
     dueDate: dueDate,
     creationDate: creationDate,
     status: status,
-    isLate: isLate
+    isLate: isLate,
   });
   try {
     const save = await todomodel.save();
     res.send(save);
   } catch (err) {
     res.status(400).json({
-      data: err
+      data: err,
     });
   }
 };
 
 module.exports.updateToDo = async (req, res) => {
   const { id } = req.params;
-  const { title, description, dueDate } = req.body; 
-
+  const { title, description, dueDate } = req.body;
+  
   try {
-    const updatedTodo = await ToDoModel.findByIdAndUpdate(
-      id,
-      {
-        title,
-        description,
-        dueDate,
-      },
-      { new: true } 
-    );
+    const updatedTodo = await ToDoModel.findByIdAndUpdate(id, {
+      title,
+      description,
+      dueDate,
+    });
 
     if (!updatedTodo) {
       return res.status(404).json({ message: "Todo not found" });
     }
 
     res.send(updatedTodo);
+    console.log(updatedTodo);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -86,16 +81,9 @@ module.exports.updateToDo = async (req, res) => {
 
 module.exports.updateStatus = async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body; 
-
+  const { status } = req.body;
   try {
-    const updatedTodo = await ToDoModel.findByIdAndUpdate(
-      id,
-      {
-        status
-      },
-      { new: true } 
-    );
+    const updatedTodo = await ToDoModel.findByIdAndUpdate(id, { status });
 
     if (!updatedTodo) {
       return res.status(404).json({ message: "Todo not found" });
@@ -103,11 +91,10 @@ module.exports.updateStatus = async (req, res) => {
 
     res.send(updatedTodo);
   } catch (err) {
-    console.error(err);
+    console.error("Error updating status:", err); // Log the error for debugging
     res.status(500).json({ message: "Server error" });
   }
 };
-
 module.exports.deleteToDo = (req, res) => {
   const { id } = req.params;
 
