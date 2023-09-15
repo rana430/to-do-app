@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ButtonControl from "../components/controls/buttonControl";
 import DataPicker from "../components/controls/dataPicker";
 import Input from "../components/controls/input";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { addTask, updateTask } from "../utils/api";
